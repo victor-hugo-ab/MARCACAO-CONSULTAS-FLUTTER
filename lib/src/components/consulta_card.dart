@@ -9,11 +9,13 @@ class ConsultaCard extends StatelessWidget {
     required this.consulta,
     required this.onConfirmar,
     required this.onCancelar,
+    required this.onVerDetalhes,
   });
 
   final Consulta consulta;
-  final VoidCallback onConfirmar;
-  final VoidCallback onCancelar;
+  final void Function(int id) onConfirmar;
+  final void Function(int id) onCancelar;
+  final void Function(int id) onVerDetalhes;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class ConsultaCard extends StatelessWidget {
           ),
           _Secao(
             titulo: 'Consulta',
-            ultima: consulta.status != StatusConsulta.agendada,
+            ultima: true,
             children: [
               Text(
                 formatarData(consulta.data),
@@ -71,9 +73,20 @@ class ConsultaCard extends StatelessWidget {
             ],
           ),
           if (consulta.status == StatusConsulta.agendada)
-            _BotoesAcao(onConfirmar: onConfirmar, onCancelar: onCancelar)
+            _BotoesAcao(
+              onConfirmar: () => onConfirmar(consulta.id),
+              onCancelar: () => onCancelar(consulta.id),
+            )
           else
             _MensagemStatus(status: consulta.status),
+          const SizedBox(height: 12),
+          TextButton(
+            onPressed: () => onVerDetalhes(consulta.id),
+            child: const Text(
+              'Ver Detalhes',
+              style: ConsultaCardStyles.botaoDetalhesTexto,
+            ),
+          ),
         ],
       ),
     );

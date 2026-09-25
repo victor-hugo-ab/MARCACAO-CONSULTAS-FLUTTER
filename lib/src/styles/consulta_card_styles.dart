@@ -45,6 +45,12 @@ class ConsultaCardStyles {
     fontSize: 14,
   );
 
+  static const TextStyle botaoDetalhesTexto = TextStyle(
+    color: AppColors.primaria,
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+  );
+
   static BoxDecoration get card => BoxDecoration(
     color: AppColors.branco,
     borderRadius: BorderRadius.circular(16),
